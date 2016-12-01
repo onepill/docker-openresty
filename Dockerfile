@@ -9,7 +9,7 @@ RUN mkdir /usr/local/openresty/nginx/conf/ssl
 RUN mkdir /usr/local/openresty/nginx/conf/site-enabled
 RUN mkdir /usr/local/openresty/nginx/conf/site-available
 COPY default /usr/local/openresty/nginx/conf/sites-enabled/default
-COPY default-ssl /usr/local/openresty/nginx/conf/etc/sites-available/default-ssl
+COPY default-ssl /usr/local/openresty/nginx/conf/sites-available/default-ssl
 COPY directive-only /usr/local/openresty/nginx/conf/directive-only
 COPY location /usr/local/openresty/nginx/conf/location
 
