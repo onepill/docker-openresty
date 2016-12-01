@@ -1,18 +1,19 @@
-FROM nginx:1.9
-MAINTAINER Kyle Mathews "mathews.kyle@gmail.com"
+FROM openresty/openresty:alpine
+MAINTAINER Siyuan Zhang "onepill@gmail.com"
 
-RUN rm /etc/nginx/nginx.conf /etc/nginx/mime.types
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY basic.conf /etc/nginx/basic.conf
-COPY mime.types /etc/nginx/mime.types
-RUN mkdir /etc/nginx/ssl
-COPY default /etc/nginx/sites-enabled/default
-COPY default-ssl /etc/nginx/sites-available/default-ssl
-COPY directive-only /etc/nginx/directive-only
-COPY location /etc/nginx/location
+RUN rm /usr/local/openresty/nginx/conf/nginx.conf /usr/local/openresty/nginx/conf/mime.types
+COPY nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+COPY basic.conf /usr/local/openresty/nginx/conf/basic.conf
+COPY mime.types /usr/local/openresty/nginx/conf/mime.types
+RUN mkdir /usr/local/openresty/nginx/conf/ssl
+RUN mkdir /usr/local/openresty/nginx/conf/site-enabled
+RUN mkdir /usr/local/openresty/nginx/conf/site-available
+COPY default /usr/local/openresty/nginx/conf/sites-enabled/default
+COPY default-ssl /usr/local/openresty/nginx/conf/etc/sites-available/default-ssl
+COPY directive-only /usr/local/openresty/nginx/conf/directive-only
+COPY location /usr/local/openresty/nginx/conf/location
 
 # expose both the HTTP (80) and HTTPS (443) ports
 EXPOSE 80 443
 
-CMD ["nginx"]
-
+ENTRYPOINT ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
